@@ -1,0 +1,9 @@
+terraform/aws/.terraform/**/*.*
+terraform/aws/terraform.tfstate
+terraform/aws/terraform.tfstate.backup
+terraform/aws/.terraform.tfstate.lock.info
+
+terraform/gcp/.terraform/**/*.*
+terraform/gcp/terraform.tfstate
+terraform/gcp/terraform.tfstate.backup
+terraform/aws/.terraform.tfstate.lock.info
