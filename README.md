@@ -12,7 +12,7 @@ Though Confluent Cloud takes care of the Kafka cluster for you; **it doesn't inc
 The provisioning process usually takes about ~5 minutes. Once it is finished; the tools will be available to use right way via the publicly exposed load balancers. The diagram below shows how this works.
 
 <p align="center">
-    <img src="images/ccloud_tools_diagram.png" />
+    <img src="images/topology_diagram.png" />
 </p>
 
 Quickstart
