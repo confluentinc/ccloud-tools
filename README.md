@@ -1,4 +1,4 @@
-# Confluent Cloud Tools
+# Running Tools from Confluent Platform along with your Confluent Cloud™ Cluster
 
 "As a developer, you want to build applications, not infrastructure" -- this is the pilosophy behind [Confluent Cloud](https://www.confluent.io/confluent-cloud), A resilient and scalable streaming data service based on Apache Kafka, delivered to you as a fully managed service.
 Unlike proprietary services, Confluent Cloud is compatible with the open-source Kafka APIs that you know and love -- which in turn unleashes access to the vibrant Kafka ecosystem that includes [Schema Registry](https://docs.confluent.io/current/schema-registry/docs/index.html), [REST Proxy](https://docs.confluent.io/current/kafka-rest/docs/index.html), [Kafka Connect](https://docs.confluent.io/current/connect/index.html), [KSQL](https://docs.confluent.io/current/ksql/docs/index.html) and the [Control Center](https://docs.confluent.io/current/control-center/index.html).
