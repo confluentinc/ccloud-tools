@@ -2,13 +2,13 @@
 
 This is an unofficial open-source project created to aid in quickly provisioning Confluent Platform Tools (i.e.: [Schema Registry](https://docs.confluent.io/current/schema-registry/docs/index.html), [REST Proxy](https://docs.confluent.io/current/kafka-rest/docs/index.html), [Kafka Connect](https://docs.confluent.io/current/connect/index.html), [KSQL](https://docs.confluent.io/current/ksql/docs/index.html), [Control Center](https://docs.confluent.io/current/control-center/index.html)) to be used while developing streams-based applications with [Confluent Cloud](https://www.confluent.io/confluent-cloud).
 
-Though Confluent Cloud takes care of the Kafka cluster for you; **it doesn't include the ecosystem mentioned before** so you would need to manually provision them by yourself. This project is based on [Terraform](https://www.terraform.io) and allows you to have the ecosystem running in the Cloud -- and automatically connected to the Kafka cluster. All you have to do is:
+This project is based on [Terraform](https://www.terraform.io) and allows you to have the ecosystem running in the Cloud—and automatically connected to the Kafka cluster. All you have to do is:
 
 <p align="center">
     <img src="images/three_steps.png" />
 </p>
 
-The provisioning process usually takes about ~5 minutes. Once it is finished; the tools will be available to use right way via the publicly exposed load balancers. The diagram below shows how this works.
+The provisioning process usually takes about ~5 minutes. Once it is finished, the tools will be available to use right way via the publicly exposed load balancers. The diagram below shows how this works.
 
 <p align="center">
     <img src="images/topology_diagram.png" />
