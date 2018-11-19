@@ -22,9 +22,9 @@ The first thing you need to do is clone the repository. So go ahead and get your
 ```bash
     $ git clone git@github.com:confluentinc/ccloud-tools.git <ENTER>
 ```
-Next, navigate to the folder that contains your Cloud provider implementation (i.e.: terraform/aws) and set up the credentials information from your Cloud provider in the **cloud.auto.tfvars** file. Please note that each Cloud provider has their own way to specify these credentials.
+Next, navigate to the folder that contains your Cloud provider implementation (i.e.: terraform/aws) and set up the credentials information from your Cloud provider in the **cloud.auto.tfvars.example** file. Before running Terraform, make sure to remove the ".example" suffix. Also note that each Cloud provider has their own way to specify these credentials.
 
-You are going need to edit the **ccloud.auto.tfvars** file as well to specify information from your Confluent Cloud cluster. This information can be easily obtained via the dashboard. Go to your cluster and then access the Client Config tab. There, you can create new API keys and secret, as well as retrieve your cluster bootstrap servers. If you are new to Confluent Cloud -- you might want to watch the [Getting Started with Confluent Cloud Professional](https://www.youtube.com/watch?v=JTPjfk51s3c) video.
+You are going need to edit the **ccloud.auto.tfvars.example** file as well to specify information from your Confluent Cloud cluster. Before running Terraform, make sure to remove the ".example" suffix. The information from the Confluent Cloud cluster can be easily obtained via the dashboard. Go to your cluster and then access the Client Config tab. There, you can create new API keys and secret, as well as retrieve your cluster bootstrap servers. If you are new to Confluent Cloud -- you might want to watch the [Getting Started with Confluent Cloud Professional](https://www.youtube.com/watch?v=JTPjfk51s3c) video.
 
 Finally, you will need to run Terraform. While under the folder that contains your Cloud provider implementation, run:
 
