@@ -4,7 +4,7 @@
 
 data "template_file" "schema_registry_properties" {
 
-  template = "${file("bootstrap/schema-registry.properties")}"
+  template = "${file("../util/schema-registry.properties")}"
 
   vars {
 
@@ -18,7 +18,7 @@ data "template_file" "schema_registry_properties" {
 
 data "template_file" "schema_registry_bootstrap" {
 
-  template = "${file("bootstrap/schema-registry.sh")}"
+  template = "${file("../util/schema-registry.sh")}"
 
   vars {
 
@@ -35,7 +35,7 @@ data "template_file" "schema_registry_bootstrap" {
 
 data "template_file" "rest_proxy_properties" {
 
-  template = "${file("bootstrap/rest-proxy.properties")}"
+  template = "${file("../util/rest-proxy.properties")}"
 
   vars {
 
@@ -52,12 +52,15 @@ data "template_file" "rest_proxy_properties" {
 
 data "template_file" "rest_proxy_bootstrap" {
 
-  template = "${file("bootstrap/rest-proxy.sh")}"
+  template = "${file("../util/rest-proxy.sh")}"
 
   vars {
 
     confluent_platform_location = "${var.confluent_platform_location}"
     rest_proxy_properties = "${data.template_file.rest_proxy_properties.rendered}"
+
+    schema_registry_url = "${join(",", formatlist("http://%s:%s",
+      aws_instance.schema_registry.*.private_ip, "8081"))}"
 
   }
 
@@ -69,7 +72,7 @@ data "template_file" "rest_proxy_bootstrap" {
 
 data "template_file" "kafka_connect_properties" {
 
-  template = "${file("bootstrap/kafka-connect.properties")}"
+  template = "${file("../util/kafka-connect.properties")}"
 
   vars {
 
@@ -86,7 +89,7 @@ data "template_file" "kafka_connect_properties" {
 
 data "template_file" "kafka_connect_bootstrap" {
 
-  template = "${file("bootstrap/kafka-connect.sh")}"
+  template = "${file("../util/kafka-connect.sh")}"
 
   vars {
 
@@ -103,7 +106,7 @@ data "template_file" "kafka_connect_bootstrap" {
 
 data "template_file" "ksql_server_properties" {
 
-  template = "${file("bootstrap/ksql-server.properties")}"
+  template = "${file("../util/ksql-server.properties")}"
 
   vars {
 
@@ -120,7 +123,7 @@ data "template_file" "ksql_server_properties" {
 
 data "template_file" "ksql_server_bootstrap" {
 
-  template = "${file("bootstrap/ksql-server.sh")}"
+  template = "${file("../util/ksql-server.sh")}"
 
   vars {
 
@@ -137,7 +140,7 @@ data "template_file" "ksql_server_bootstrap" {
 
 data "template_file" "control_center_properties" {
 
-  template = "${file("bootstrap/control-center.properties")}"
+  template = "${file("../util/control-center.properties")}"
 
   vars {
 
@@ -160,7 +163,7 @@ data "template_file" "control_center_properties" {
 
 data "template_file" "control_center_bootstrap" {
 
-  template = "${file("bootstrap/control-center.sh")}"
+  template = "${file("../util/control-center.sh")}"
 
   vars {
 
