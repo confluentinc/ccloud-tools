@@ -3,11 +3,13 @@
 ########### Update and Install ###########
 
 yum update -y
+yum install wget -y
+yum install unzip -y
 yum install java-1.8.0-openjdk-devel.x86_64 -y
 
 ########### Initial Bootstrap ###########
 
-cd /home/ec2-user
+cd /tmp
 wget ${confluent_platform_location}
 unzip confluent-5.0.0-2.11.zip
 mkdir /etc/confluent
@@ -22,15 +24,9 @@ cat > ksql-server-ccloud.properties <<- "EOF"
 ${ksql_server_properties}
 EOF
 
-############# Change Ownership ##############
-
-chown -R ec2-user:ec2-user /etc/confluent
-
 ########### Creating the Service ############
 
-cd /lib/systemd/system
-
-cat > ksql-server.service <<- "EOF"
+cat > /lib/systemd/system/ksql-server.service <<- "EOF"
 [Unit]
 Description=Confluent KSQL Server
 After=network.target
@@ -39,7 +35,6 @@ After=network.target
 Type=simple
 Restart=always
 RestartSec=1
-User=ec2-user
 ExecStart=/etc/confluent/confluent-5.0.0/bin/ksql-server-start /etc/confluent/confluent-5.0.0/etc/ksql/ksql-server-ccloud.properties
 ExecStop=/etc/confluent/confluent-5.0.0/bin/ksql-server-stop /etc/confluent/confluent-5.0.0/etc/ksql/ksql-server-ccloud.properties
 
