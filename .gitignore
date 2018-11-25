@@ -11,3 +11,4 @@ terraform/gcp/terraform.tfstate.backup
 terraform/gcp/.terraform.tfstate.lock.info
 terraform/gcp/ccloud.auto.tfvars
 terraform/gcp/cloud.auto.tfvars
+terraform/gcp/credentials.json
