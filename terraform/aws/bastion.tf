@@ -18,8 +18,8 @@ data "template_file" "bastion_server_bootstrap" {
 
 resource "aws_subnet" "bastion_server" {
 
-  vpc_id                  = "${aws_vpc.default.id}"
-  cidr_block              = "10.0.5.0/24"
+  vpc_id = "${aws_vpc.default.id}"
+  cidr_block = "10.0.9.0/24"
   map_public_ip_on_launch = true
   availability_zone = "${element(var.aws_availability_zones, 0)}"
 
@@ -33,15 +33,15 @@ resource "aws_subnet" "bastion_server" {
 
 resource "aws_security_group" "bastion_server" {
 
-  name        = "bastion-server"
+  name = "bastion-server"
   description = "Bastion Server"
-  vpc_id      = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.default.id}"
 
   ingress {
 
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
 
     // For security reasons, it
     // is recommended to set your
@@ -55,9 +55,9 @@ resource "aws_security_group" "bastion_server" {
 
   egress {
 
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
     cidr_blocks = ["0.0.0.0/0"]
 
   }  
@@ -91,12 +91,12 @@ resource "aws_instance" "bastion_server" {
 
 }
 
-output "bastion_server_public_ip_address" {
+output "Bastion Server Public IP Address" {
 
   value = "${aws_instance.bastion_server.public_ip}"
 
 }
-output "bastion_server_private_key" {
+output "Bastion Server Private Key" {
 
   value = "${tls_private_key.key_pair.private_key_pem}"
 

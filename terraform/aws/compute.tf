@@ -26,8 +26,7 @@ resource "aws_key_pair" "generated_key" {
 
 resource "aws_instance" "schema_registry" {
 
-  depends_on = ["aws_subnet.private_subnet_1",
-                "aws_subnet.private_subnet_2",
+  depends_on = ["aws_subnet.private_subnet",
                 "aws_nat_gateway.default"]
 
   count = "${var.instance_count["schema_registry"] >= 1
@@ -37,7 +36,7 @@ resource "aws_instance" "schema_registry" {
   instance_type = "t3.medium"
   key_name = "${aws_key_pair.generated_key.key_name}"
 
-  subnet_id = "${element(data.aws_subnet_ids.private.ids, count.index)}"
+  subnet_id = "${element(aws_subnet.private_subnet.*.id, count.index)}"
   vpc_security_group_ids = ["${aws_security_group.schema_registry.id}"]
 
   user_data = "${data.template_file.schema_registry_bootstrap.rendered}"
@@ -71,7 +70,7 @@ resource "aws_instance" "rest_proxy" {
   instance_type = "t3.medium"
   key_name = "${aws_key_pair.generated_key.key_name}"
 
-  subnet_id = "${element(data.aws_subnet_ids.private.ids, count.index)}"
+  subnet_id = "${element(aws_subnet.private_subnet.*.id, count.index)}"
   vpc_security_group_ids = ["${aws_security_group.rest_proxy.id}"]
   
   user_data = "${data.template_file.rest_proxy_bootstrap.rendered}"
@@ -105,7 +104,7 @@ resource "aws_instance" "kafka_connect" {
   instance_type = "t3.medium"
   key_name = "${aws_key_pair.generated_key.key_name}"
 
-  subnet_id = "${element(data.aws_subnet_ids.private.ids, count.index)}"
+  subnet_id = "${element(aws_subnet.private_subnet.*.id, count.index)}"
   vpc_security_group_ids = ["${aws_security_group.kafka_connect.id}"]
   
   user_data = "${data.template_file.kafka_connect_bootstrap.rendered}"
@@ -139,7 +138,7 @@ resource "aws_instance" "ksql_server" {
   instance_type = "t3.2xlarge"
   key_name = "${aws_key_pair.generated_key.key_name}"
 
-  subnet_id = "${element(data.aws_subnet_ids.private.ids, count.index)}"
+  subnet_id = "${element(aws_subnet.private_subnet.*.id, count.index)}"
   vpc_security_group_ids = ["${aws_security_group.ksql_server.id}"]
   
   user_data = "${data.template_file.ksql_server_bootstrap.rendered}"
@@ -173,7 +172,7 @@ resource "aws_instance" "control_center" {
   instance_type = "t3.2xlarge"
   key_name = "${aws_key_pair.generated_key.key_name}"
 
-  subnet_id = "${element(data.aws_subnet_ids.private.ids, count.index)}"
+  subnet_id = "${element(aws_subnet.private_subnet.*.id, count.index)}"
   vpc_security_group_ids = ["${aws_security_group.control_center.id}"]
   
   user_data = "${data.template_file.control_center_bootstrap.rendered}"

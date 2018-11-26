@@ -1,8 +1,14 @@
+variable "gcp_region" {
+
+  default = "us-east1"
+
+}
+
 variable "gcp_availability_zones" {
 
   type = "list"
 
-  default = ["us-east1-b", "us-east1-c"]
+  default = ["us-east1-b", "us-east1-c", "us-east1-d"]
 
 }
 

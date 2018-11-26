@@ -14,4 +14,3 @@
 
 gcp_credentials = "credentials.json"
 gcp_project = "<YOUR_GCP_PROJECT>"
-gcp_region = "us-east1"

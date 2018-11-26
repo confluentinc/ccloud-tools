@@ -1,8 +1,14 @@
+variable "aws_region" {
+
+  default = "us-east-1"
+
+}
+
 variable "aws_availability_zones" {
 
   type = "list"
 
-  default = ["us-east-1a", "us-east-1b"]
+  default = ["us-east-1a", "us-east-1b", "us-east-1c"]
 
 }
 

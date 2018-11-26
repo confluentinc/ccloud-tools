@@ -1,6 +1,7 @@
 ###########################################
 ################### VPC ###################
 ###########################################
+
 resource "aws_vpc" "default" {
     
     cidr_block = "10.0.0.0/16"
@@ -95,16 +96,11 @@ resource "aws_route_table_association" "public_subnet_2_association" {
 
 }
 
-resource "aws_route_table_association" "private_subnet_1_association" {
+resource "aws_route_table_association" "private_subnet_association" {
 
-    subnet_id = "${aws_subnet.private_subnet_1.id}"
-    route_table_id = "${aws_route_table.private_route_table.id}"
-
-}
-
-resource "aws_route_table_association" "private_subnet_2_association" {
-
-    subnet_id = "${aws_subnet.private_subnet_2.id}"
+    count = "${length(var.aws_availability_zones)}"
+    
+    subnet_id = "${element(aws_subnet.private_subnet.*.id, count.index)}"
     route_table_id = "${aws_route_table.private_route_table.id}"
 
 }
@@ -113,44 +109,35 @@ resource "aws_route_table_association" "private_subnet_2_association" {
 ################# Subnets #################
 ###########################################
 
-data "aws_subnet_ids" "private" {
+variable "reserved_cidr_blocks" {
 
-  vpc_id = "${aws_vpc.default.id}"
+  type = "list"
 
-  filter {
+  // The list below represents the possible values
+  // of CIDR blocks to be used in the private subnets.
+  // Since the private subnets are created dynamically,
+  // we use this list to reserve six possible subnets.
+  
+  // Currently AWS provides ~3 availability zones per
+  // region, so we are providing here 6 which may be
+  // more than enough.
 
-    name = "tag:Name"
-    values = ["private-subnet"]
-
-  }
-
-}
-
-resource "aws_subnet" "private_subnet_1" {
-
-  vpc_id = "${aws_vpc.default.id}"
-  cidr_block = "10.0.1.0/24"
-  map_public_ip_on_launch = false
-  availability_zone = "${element(var.aws_availability_zones, 0)}"
-
-    tags {
-
-        Name = "private-subnet"
-
-    }    
+  default = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24",
+             "10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
 
 }
 
-resource "aws_subnet" "private_subnet_2" {
+resource "aws_subnet" "private_subnet" {
 
+  count = "${length(var.aws_availability_zones)}"
   vpc_id = "${aws_vpc.default.id}"
-  cidr_block = "10.0.2.0/24"
+  cidr_block = "${element(var.reserved_cidr_blocks, count.index)}"
   map_public_ip_on_launch = false
-  availability_zone = "${element(var.aws_availability_zones, 1)}"
+  availability_zone = "${element(var.aws_availability_zones, count.index)}"
 
     tags {
 
-        Name = "private-subnet"
+        Name = "private-subnet-${count.index}"
 
     }    
 
@@ -159,13 +146,13 @@ resource "aws_subnet" "private_subnet_2" {
 resource "aws_subnet" "public_subnet_1" {
 
   vpc_id = "${aws_vpc.default.id}"
-  cidr_block = "10.0.3.0/24"
+  cidr_block = "10.0.7.0/24"
   map_public_ip_on_launch = true
   availability_zone = "${element(var.aws_availability_zones, 0)}"
 
     tags {
 
-        Name = "public-subnet"
+        Name = "public-subnet-1"
 
     }    
 
@@ -174,13 +161,13 @@ resource "aws_subnet" "public_subnet_1" {
 resource "aws_subnet" "public_subnet_2" {
 
   vpc_id = "${aws_vpc.default.id}"
-  cidr_block = "10.0.4.0/24"
+  cidr_block = "10.0.8.0/24"
   map_public_ip_on_launch = true
   availability_zone = "${element(var.aws_availability_zones, 1)}"
 
     tags {
 
-        Name = "public-subnet"
+        Name = "public-subnet-2"
 
     }    
 
@@ -227,7 +214,7 @@ resource "aws_security_group" "schema_registry" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["10.0.5.0/24"]
+    cidr_blocks = ["10.0.9.0/24"]
 
   }
 
@@ -240,7 +227,11 @@ resource "aws_security_group" "schema_registry" {
     cidr_blocks = ["10.0.1.0/24",
                    "10.0.2.0/24",
                    "10.0.3.0/24",
-                   "10.0.4.0/24"]
+                   "10.0.4.0/24",
+                   "10.0.5.0/24",
+                   "10.0.6.0/24",
+                   "10.0.7.0/24",
+                   "10.0.8.0/24"]
 
   }
 
@@ -266,7 +257,7 @@ resource "aws_security_group" "rest_proxy" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["10.0.5.0/24"]
+    cidr_blocks = ["10.0.9.0/24"]
 
   }
 
@@ -279,7 +270,11 @@ resource "aws_security_group" "rest_proxy" {
     cidr_blocks = ["10.0.1.0/24",
                    "10.0.2.0/24",
                    "10.0.3.0/24",
-                   "10.0.4.0/24"]
+                   "10.0.4.0/24",
+                   "10.0.5.0/24",
+                   "10.0.6.0/24",
+                   "10.0.7.0/24",
+                   "10.0.8.0/24"]
 
   }
 
@@ -305,7 +300,7 @@ resource "aws_security_group" "kafka_connect" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["10.0.5.0/24"]
+    cidr_blocks = ["10.0.9.0/24"]
 
   }
 
@@ -318,7 +313,11 @@ resource "aws_security_group" "kafka_connect" {
     cidr_blocks = ["10.0.1.0/24",
                    "10.0.2.0/24",
                    "10.0.3.0/24",
-                   "10.0.4.0/24"]
+                   "10.0.4.0/24",
+                   "10.0.5.0/24",
+                   "10.0.6.0/24",
+                   "10.0.7.0/24",
+                   "10.0.8.0/24"]
 
   }
 
@@ -344,7 +343,7 @@ resource "aws_security_group" "ksql_server" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["10.0.5.0/24"]
+    cidr_blocks = ["10.0.9.0/24"]
 
   }
 
@@ -357,7 +356,11 @@ resource "aws_security_group" "ksql_server" {
     cidr_blocks = ["10.0.1.0/24",
                    "10.0.2.0/24",
                    "10.0.3.0/24",
-                   "10.0.4.0/24"]
+                   "10.0.4.0/24",
+                   "10.0.5.0/24",
+                   "10.0.6.0/24",
+                   "10.0.7.0/24",
+                   "10.0.8.0/24"]
 
   }
 
@@ -383,7 +386,7 @@ resource "aws_security_group" "control_center" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["10.0.5.0/24"]
+    cidr_blocks = ["10.0.9.0/24"]
 
   }
 
@@ -396,7 +399,11 @@ resource "aws_security_group" "control_center" {
     cidr_blocks = ["10.0.1.0/24",
                    "10.0.2.0/24",
                    "10.0.3.0/24",
-                   "10.0.4.0/24"]
+                   "10.0.4.0/24",
+                   "10.0.5.0/24",
+                   "10.0.6.0/24",
+                   "10.0.7.0/24",
+                   "10.0.8.0/24"]
 
   }
 
