@@ -4,14 +4,14 @@
 
 output "Schema Registry" {
 
-  value = "${join(",", formatlist("http://%s:%s", google_compute_instance.schema_registry.*.network_interface.0.access_config.0.assigned_nat_ip, "8081"))}"
+  value = "${join(",", formatlist("http://%s", google_compute_global_address.schema_registry.*.address))}"
 
 }
 
 output "REST Proxy" {
 
   value = "${var.instance_count["rest_proxy"] >= 1
-           ? "${join(",", formatlist("http://%s:%s", google_compute_instance.rest_proxy.*.network_interface.0.access_config.0.assigned_nat_ip, "8082"))}"
+           ? "${join(",", formatlist("http://%s", google_compute_global_address.rest_proxy.*.address))}"
            : "REST Proxy has been disabled"}"
 
 }
@@ -19,7 +19,7 @@ output "REST Proxy" {
 output "Kafka Connect" {
 
   value = "${var.instance_count["kafka_connect"] >= 1
-           ? "${join(",", formatlist("http://%s:%s", google_compute_instance.kafka_connect.*.network_interface.0.access_config.0.assigned_nat_ip, "8083"))}"
+           ? "${join(",", formatlist("http://%s", google_compute_global_address.kafka_connect.*.address))}"
            : "Kafka Connect has been disabled"}"
 
 }
@@ -27,7 +27,7 @@ output "Kafka Connect" {
 output "KSQL Server" {
 
   value = "${var.instance_count["ksql_server"] >= 1
-           ? "${join(",", formatlist("http://%s:%s", google_compute_instance.ksql_server.*.network_interface.0.access_config.0.assigned_nat_ip, "8088"))}"
+           ? "${join(",", formatlist("http://%s", google_compute_global_address.ksql_server.*.address))}"
            : "KSQL Server has been disabled"}"
 
 }
@@ -35,7 +35,7 @@ output "KSQL Server" {
 output "Control Center" {
 
   value = "${var.instance_count["control_center"] >= 1
-           ? "${join(",", formatlist("http://%s:%s", google_compute_instance.control_center.*.network_interface.0.access_config.0.assigned_nat_ip, "9021"))}"
+           ? "${join(",", formatlist("http://%s", google_compute_global_address.control_center.*.address))}"
            : "Control Center has been disabled"}"
 
 }

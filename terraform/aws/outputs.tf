@@ -4,7 +4,7 @@
 
 output "Schema Registry" {
 
-  value = "http://${aws_alb.schema_registry.0.dns_name}"
+  value = "${join(",", formatlist("http://%s", aws_alb.schema_registry.*.dns_name))}"
 
 }
 

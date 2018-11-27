@@ -43,8 +43,7 @@ data "template_file" "rest_proxy_properties" {
     access_key = "${var.ccloud_access_key}"
     secret_key = "${var.ccloud_secret_key}"
 
-    schema_registry_url = "${join(",", formatlist("http://%s:%s",
-      google_compute_instance.schema_registry.*.network_interface.0.network_ip, "8081"))}"
+    schema_registry_url = "http://${google_compute_global_address.schema_registry.address}"
 
   }
 
@@ -77,8 +76,7 @@ data "template_file" "kafka_connect_properties" {
     access_key = "${var.ccloud_access_key}"
     secret_key = "${var.ccloud_secret_key}"
 
-    schema_registry_url = "${join(",", formatlist("http://%s:%s",
-      google_compute_instance.schema_registry.*.network_interface.0.network_ip, "8081"))}"
+    schema_registry_url = "http://${google_compute_global_address.schema_registry.address}"
 
   }
 
@@ -111,8 +109,7 @@ data "template_file" "ksql_server_properties" {
     access_key = "${var.ccloud_access_key}"
     secret_key = "${var.ccloud_secret_key}"
 
-    schema_registry_url = "${join(",", formatlist("http://%s:%s",
-      google_compute_instance.schema_registry.*.network_interface.0.network_ip, "8081"))}"
+    schema_registry_url = "http://${google_compute_global_address.schema_registry.address}"
 
   }
 
@@ -145,14 +142,11 @@ data "template_file" "control_center_properties" {
     access_key = "${var.ccloud_access_key}"
     secret_key = "${var.ccloud_secret_key}"
 
-    schema_registry_url = "${join(",", formatlist("http://%s:%s",
-      google_compute_instance.schema_registry.*.network_interface.0.network_ip, "8081"))}"
+    schema_registry_url = "http://${google_compute_global_address.schema_registry.address}"
 
-    kafka_connect_url = "${join(",", formatlist("http://%s:%s",
-      google_compute_instance.kafka_connect.*.network_interface.0.network_ip, "8083"))}"
+    kafka_connect_url = "http://${google_compute_global_address.kafka_connect.address}"
 
-    ksql_server_url = "${join(",", formatlist("http://%s:%s",
-      google_compute_instance.ksql_server.*.network_interface.0.network_ip, "8088"))}"
+    ksql_server_url = "http://${google_compute_global_address.ksql_server.address}"
 
   }
 
