@@ -173,6 +173,23 @@ resource "aws_subnet" "public_subnet_2" {
 
 }
 
+resource "aws_subnet" "bastion_server" {
+
+  count = "${var.instance_count["bastion_server"] >= 1 ? 1 : 0}"
+  
+  vpc_id = "${aws_vpc.default.id}"
+  cidr_block = "10.0.9.0/24"
+  map_public_ip_on_launch = true
+  availability_zone = "${element(var.aws_availability_zones, 0)}"
+
+    tags {
+
+        Name = "bastion-server"
+
+    }    
+
+}
+
 ###########################################
 ############# Security Groups #############
 ###########################################
@@ -200,10 +217,18 @@ resource "aws_security_group" "load_balancer" {
     cidr_blocks = ["0.0.0.0/0"]
     
   }  
+
+    tags {
+
+        Name = "load-balancer"
+
+    }    
   
 }
 
 resource "aws_security_group" "schema_registry" {
+
+  count = "${var.instance_count["schema_registry"] >= 1 ? 1 : 0}"
 
   name = "schema-registry"
   description = "Schema Registry"
@@ -242,11 +267,19 @@ resource "aws_security_group" "schema_registry" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
     
-  }  
+  }
+
+    tags {
+
+        Name = "schema-registry"
+
+    }    
   
 }
 
 resource "aws_security_group" "rest_proxy" {
+
+  count = "${var.instance_count["rest_proxy"] >= 1 ? 1 : 0}"
 
   name = "rest-proxy"
   description = "REST Proxy"
@@ -286,10 +319,18 @@ resource "aws_security_group" "rest_proxy" {
     cidr_blocks = ["0.0.0.0/0"]
     
   }  
+
+    tags {
+
+        Name = "rest-proxy"
+
+    }    
   
 }
 
 resource "aws_security_group" "kafka_connect" {
+
+  count = "${var.instance_count["kafka_connect"] >= 1 ? 1 : 0}"
 
   name = "kafka-connect"
   description = "Kafka Connect"
@@ -328,11 +369,19 @@ resource "aws_security_group" "kafka_connect" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
     
-  }  
+  }
+
+    tags {
+
+        Name = "kafka-connect"
+
+    }    
   
 }
 
 resource "aws_security_group" "ksql_server" {
+
+  count = "${var.instance_count["ksql_server"] >= 1 ? 1 : 0}"
 
   name = "ksql-server"
   description = "KSQL Server"
@@ -371,11 +420,19 @@ resource "aws_security_group" "ksql_server" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
     
-  }  
+  }
+
+    tags {
+
+        Name = "ksql-server"
+
+    }    
   
 }
 
 resource "aws_security_group" "control_center" {
+
+  count = "${var.instance_count["control_center"] >= 1 ? 1 : 0}"
 
   name = "control-center"
   description = "Control Center"
@@ -414,6 +471,53 @@ resource "aws_security_group" "control_center" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
     
-  }  
+  }
+
+    tags {
+
+        Name = "control-center"
+
+    }    
   
+}
+
+resource "aws_security_group" "bastion_server" {
+
+  count = "${var.instance_count["bastion_server"] >= 1 ? 1 : 0}"
+
+  name = "bastion-server"
+  description = "Bastion Server"
+  vpc_id = "${aws_vpc.default.id}"
+
+  ingress {
+
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+
+    // For security reasons, it
+    // is recommended to set your
+    // public IP address here, so
+    // the bastion server is only
+    // accessible from your end.
+
+    cidr_blocks = ["0.0.0.0/0"]
+
+  }
+
+  egress {
+
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+
+  }
+
+    tags {
+
+        Name = "bastion-server"
+
+    }    
+
 }

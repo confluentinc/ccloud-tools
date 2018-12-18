@@ -173,3 +173,18 @@ data "template_file" "control_center_bootstrap" {
   }
 
 }
+
+###########################################
+######## Bastion Server Bootstrap #########
+###########################################
+
+data "template_file" "bastion_server_bootstrap" {
+
+  template = <<EOT
+
+    #!/bin/bash
+    yum update -y
+
+  EOT
+  
+}

@@ -194,6 +194,39 @@ resource "aws_instance" "control_center" {
 }
 
 ###########################################
+############ Bastion Server ###############
+###########################################
+
+resource "aws_instance" "bastion_server" {
+
+  count = "${var.instance_count["bastion_server"] >= 1 ? 1 : 0}"
+
+  ami = "ami-0922553b7b0369273"
+  instance_type = "t2.micro"
+  key_name = "${aws_key_pair.generated_key.key_name}"
+
+  subnet_id = "${aws_subnet.bastion_server.id}"
+  vpc_security_group_ids = ["${aws_security_group.bastion_server.id}"]
+
+  user_data = "${data.template_file.bastion_server_bootstrap.rendered}"
+
+  ebs_block_device {
+
+    device_name = "/dev/xvdb"
+    volume_type = "gp2"
+    volume_size = 10
+
+  }
+
+  tags {
+
+    Name = "bastion-server"
+
+  }
+
+}
+
+###########################################
 ########## Schema Registry LBR ############
 ###########################################
 
@@ -299,6 +332,7 @@ resource "aws_alb_target_group_attachment" "rest_proxy_attachment" {
 
 resource "aws_alb" "rest_proxy" {
 
+  depends_on = ["aws_instance.rest_proxy"]
   count = "${var.instance_count["rest_proxy"] >= 1 ? 1 : 0}"
 
   name = "rest-proxy"
@@ -370,6 +404,7 @@ resource "aws_alb_target_group_attachment" "kafka_connect_attachment" {
 
 resource "aws_alb" "kafka_connect" {
 
+  depends_on = ["aws_instance.kafka_connect"]
   count = "${var.instance_count["kafka_connect"] >= 1 ? 1 : 0}"
 
   name = "kafka-connect"
@@ -441,6 +476,7 @@ resource "aws_alb_target_group_attachment" "ksql_server_attachment" {
 
 resource "aws_alb" "ksql_server" {
 
+  depends_on = ["aws_instance.ksql_server"]
   count = "${var.instance_count["ksql_server"] >= 1 ? 1 : 0}"
 
   name = "ksql-server"
@@ -512,6 +548,7 @@ resource "aws_alb_target_group_attachment" "control_center_attachment" {
 
 resource "aws_alb" "control_center" {
 
+  depends_on = ["aws_instance.control_center"]
   count = "${var.instance_count["control_center"] >= 1 ? 1 : 0}"
 
   name = "control-center"
