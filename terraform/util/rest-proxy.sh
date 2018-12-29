@@ -11,13 +11,13 @@ yum install java-1.8.0-openjdk-devel.x86_64 -y
 
 cd /tmp
 wget ${confluent_platform_location}
-unzip confluent-5.0.0-2.11.zip
+unzip confluent-5.1.0-2.11.zip
 mkdir /etc/confluent
-mv confluent-5.0.0 /etc/confluent
+mv confluent-5.1.0 /etc/confluent
 
 ########### Generating Props File ###########
 
-cd /etc/confluent/confluent-5.0.0/etc/kafka-rest
+cd /etc/confluent/confluent-5.1.0/etc/kafka-rest
 
 cat > kafka-rest-ccloud.properties <<- "EOF"
 ${rest_proxy_properties}
@@ -34,8 +34,8 @@ After=network.target
 Type=simple
 Restart=always
 RestartSec=1
-ExecStart=/etc/confluent/confluent-5.0.0/bin/kafka-rest-start /etc/confluent/confluent-5.0.0/etc/kafka-rest/kafka-rest-ccloud.properties
-ExecStop=/etc/confluent/confluent-5.0.0/bin/kafka-rest-stop /etc/confluent/confluent-5.0.0/etc/kafka-rest/kafka-rest-ccloud.properties
+ExecStart=/etc/confluent/confluent-5.1.0/bin/kafka-rest-start /etc/confluent/confluent-5.1.0/etc/kafka-rest/kafka-rest-ccloud.properties
+ExecStop=/etc/confluent/confluent-5.1.0/bin/kafka-rest-stop /etc/confluent/confluent-5.1.0/etc/kafka-rest/kafka-rest-ccloud.properties
 
 [Install]
 WantedBy=multi-user.target

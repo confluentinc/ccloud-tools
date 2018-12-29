@@ -11,14 +11,14 @@ yum install java-1.8.0-openjdk-devel.x86_64 -y
 
 cd /tmp
 wget ${confluent_platform_location}
-unzip confluent-5.0.0-2.11.zip
+unzip confluent-5.1.0-2.11.zip
 mkdir /etc/confluent
-mv confluent-5.0.0 /etc/confluent
-mkdir /etc/confluent/confluent-5.0.0/etc/kafka-connect
+mv confluent-5.1.0 /etc/confluent
+mkdir /etc/confluent/confluent-5.1.0/etc/kafka-connect
 
 ########### Generating Props File ###########
 
-cd /etc/confluent/confluent-5.0.0/etc/kafka-connect
+cd /etc/confluent/confluent-5.1.0/etc/kafka-connect
 
 cat > kafka-connect-ccloud.properties <<- "EOF"
 ${kafka_connect_properties}
@@ -34,7 +34,7 @@ Description=Kafka Connect
 Type=simple
 Restart=always
 RestartSec=1
-ExecStart=/etc/confluent/confluent-5.0.0/bin/connect-distributed /etc/confluent/confluent-5.0.0/etc/kafka-connect/kafka-connect-ccloud.properties
+ExecStart=/etc/confluent/confluent-5.1.0/bin/connect-distributed /etc/confluent/confluent-5.1.0/etc/kafka-connect/kafka-connect-ccloud.properties
 
 [Install]
 WantedBy=multi-user.target

@@ -11,13 +11,13 @@ yum install java-1.8.0-openjdk-devel.x86_64 -y
 
 cd /tmp
 wget ${confluent_platform_location}
-unzip confluent-5.0.0-2.11.zip
+unzip confluent-5.1.0-2.11.zip
 mkdir /etc/confluent
-mv confluent-5.0.0 /etc/confluent
+mv confluent-5.1.0 /etc/confluent
 
 ########### Generating Props File ###########
 
-cd /etc/confluent/confluent-5.0.0/etc/schema-registry
+cd /etc/confluent/confluent-5.1.0/etc/schema-registry
 
 cat > schema-registry-ccloud.properties <<- "EOF"
 ${schema_registry_properties}
@@ -34,8 +34,8 @@ After=network.target
 Type=simple
 Restart=always
 RestartSec=1
-ExecStart=/etc/confluent/confluent-5.0.0/bin/schema-registry-start /etc/confluent/confluent-5.0.0/etc/schema-registry/schema-registry-ccloud.properties
-ExecStop=/etc/confluent/confluent-5.0.0/bin/schema-registry-stop /etc/confluent/confluent-5.0.0/etc/schema-registry/schema-registry-ccloud.properties
+ExecStart=/etc/confluent/confluent-5.1.0/bin/schema-registry-start /etc/confluent/confluent-5.1.0/etc/schema-registry/schema-registry-ccloud.properties
+ExecStop=/etc/confluent/confluent-5.1.0/bin/schema-registry-stop /etc/confluent/confluent-5.1.0/etc/schema-registry/schema-registry-ccloud.properties
 
 [Install]
 WantedBy=multi-user.target

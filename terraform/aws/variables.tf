@@ -31,6 +31,6 @@ variable "instance_count" {
 
 variable "confluent_platform_location" {
 
-  default = "http://packages.confluent.io/archive/5.0/confluent-5.0.0-2.11.zip"
+  default = "http://packages.confluent.io/archive/5.1/confluent-5.1.0-2.11.zip"
 
 }

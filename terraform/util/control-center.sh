@@ -11,14 +11,14 @@ yum install java-1.8.0-openjdk-devel.x86_64 -y
 
 cd /tmp
 wget ${confluent_platform_location}
-unzip confluent-5.0.0-2.11.zip
+unzip confluent-5.1.0-2.11.zip
 mkdir /etc/confluent
-mv confluent-5.0.0 /etc/confluent
-mkdir /etc/confluent/confluent-5.0.0/data
+mv confluent-5.1.0 /etc/confluent
+mkdir /etc/confluent/confluent-5.1.0/data
 
 ########### Generating Props File ###########
 
-cd /etc/confluent/confluent-5.0.0/etc/confluent-control-center
+cd /etc/confluent/confluent-5.1.0/etc/confluent-control-center
 
 cat > c3-ccloud.properties <<- "EOF"
 ${control_center_properties}
@@ -34,8 +34,8 @@ Description=Confluent Control Center
 Type=simple
 Restart=always
 RestartSec=1
-ExecStart=/etc/confluent/confluent-5.0.0/bin/control-center-start /etc/confluent/confluent-5.0.0/etc/confluent-control-center/c3-ccloud.properties
-ExecStop=/etc/confluent/confluent-5.0.0/bin/control-center-stop /etc/confluent/confluent-5.0.0/etc/confluent-control-center/c3-ccloud.properties
+ExecStart=/etc/confluent/confluent-5.1.0/bin/control-center-start /etc/confluent/confluent-5.1.0/etc/confluent-control-center/c3-ccloud.properties
+ExecStop=/etc/confluent/confluent-5.1.0/bin/control-center-stop /etc/confluent/confluent-5.1.0/etc/confluent-control-center/c3-ccloud.properties
 
 [Install]
 WantedBy=multi-user.target
