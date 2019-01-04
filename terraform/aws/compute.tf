@@ -165,7 +165,7 @@ resource "aws_instance" "ksql_server" {
 
 resource "aws_instance" "control_center" {
 
-  depends_on = ["aws_instance.schema_registry"]
+  depends_on = ["aws_instance.ksql_server"]
 
   count = "${var.instance_count["control_center"]}"
   ami = "ami-0922553b7b0369273"
