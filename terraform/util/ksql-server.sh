@@ -14,11 +14,11 @@ wget ${confluent_platform_location}
 unzip confluent-5.1.0-2.11.zip
 mkdir /etc/confluent
 mv confluent-5.1.0 /etc/confluent
-mkdir /etc/confluent/confluent-5.1.0/data
+mkdir ${confluent_home_value}/data
 
 ########### Generating Props File ###########
 
-cd /etc/confluent/confluent-5.1.0/etc/ksql
+cd ${confluent_home_value}/etc/ksql
 
 cat > ksql-server-ccloud.properties <<- "EOF"
 ${ksql_server_properties}
@@ -35,8 +35,8 @@ After=network.target
 Type=simple
 Restart=always
 RestartSec=1
-ExecStart=/etc/confluent/confluent-5.1.0/bin/ksql-server-start /etc/confluent/confluent-5.1.0/etc/ksql/ksql-server-ccloud.properties
-ExecStop=/etc/confluent/confluent-5.1.0/bin/ksql-server-stop /etc/confluent/confluent-5.1.0/etc/ksql/ksql-server-ccloud.properties
+ExecStart=${confluent_home_value}/bin/ksql-server-start ${confluent_home_value}/etc/ksql/ksql-server-ccloud.properties
+ExecStop=${confluent_home_value}/bin/ksql-server-stop ${confluent_home_value}/etc/ksql/ksql-server-ccloud.properties
 
 [Install]
 WantedBy=multi-user.target

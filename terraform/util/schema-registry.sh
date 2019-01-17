@@ -17,7 +17,7 @@ mv confluent-5.1.0 /etc/confluent
 
 ########### Generating Props File ###########
 
-cd /etc/confluent/confluent-5.1.0/etc/schema-registry
+cd ${confluent_home_value}/etc/schema-registry
 
 cat > schema-registry-ccloud.properties <<- "EOF"
 ${schema_registry_properties}
@@ -34,8 +34,8 @@ After=network.target
 Type=simple
 Restart=always
 RestartSec=1
-ExecStart=/etc/confluent/confluent-5.1.0/bin/schema-registry-start /etc/confluent/confluent-5.1.0/etc/schema-registry/schema-registry-ccloud.properties
-ExecStop=/etc/confluent/confluent-5.1.0/bin/schema-registry-stop /etc/confluent/confluent-5.1.0/etc/schema-registry/schema-registry-ccloud.properties
+ExecStart=${confluent_home_value}/bin/schema-registry-start ${confluent_home_value}/etc/schema-registry/schema-registry-ccloud.properties
+ExecStop=${confluent_home_value}/bin/schema-registry-stop ${confluent_home_value}/etc/schema-registry/schema-registry-ccloud.properties
 
 [Install]
 WantedBy=multi-user.target

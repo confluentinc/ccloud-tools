@@ -11,6 +11,7 @@ data "template_file" "schema_registry_properties" {
     broker_list = "${var.ccloud_broker_list}"
     access_key = "${var.ccloud_access_key}"
     secret_key = "${var.ccloud_secret_key}"
+    confluent_home_value = "${var.confluent_home_value}"
 
   }
 
@@ -24,6 +25,7 @@ data "template_file" "schema_registry_bootstrap" {
 
     confluent_platform_location = "${var.confluent_platform_location}"
     schema_registry_properties = "${data.template_file.schema_registry_properties.rendered}"
+    confluent_home_value = "${var.confluent_home_value}"
 
   }
 
@@ -42,6 +44,7 @@ data "template_file" "rest_proxy_properties" {
     broker_list = "${var.ccloud_broker_list}"
     access_key = "${var.ccloud_access_key}"
     secret_key = "${var.ccloud_secret_key}"
+    confluent_home_value = "${var.confluent_home_value}"
 
     schema_registry_url = "http://${google_compute_global_address.schema_registry.address}"
 
@@ -57,6 +60,7 @@ data "template_file" "rest_proxy_bootstrap" {
 
     confluent_platform_location = "${var.confluent_platform_location}"
     rest_proxy_properties = "${data.template_file.rest_proxy_properties.rendered}"
+    confluent_home_value = "${var.confluent_home_value}"
 
   }
 
@@ -75,6 +79,7 @@ data "template_file" "kafka_connect_properties" {
     broker_list = "${var.ccloud_broker_list}"
     access_key = "${var.ccloud_access_key}"
     secret_key = "${var.ccloud_secret_key}"
+    confluent_home_value = "${var.confluent_home_value}"
 
     schema_registry_url = "http://${google_compute_global_address.schema_registry.address}"
 
@@ -90,6 +95,7 @@ data "template_file" "kafka_connect_bootstrap" {
 
     confluent_platform_location = "${var.confluent_platform_location}"
     kafka_connect_properties = "${data.template_file.kafka_connect_properties.rendered}"
+    confluent_home_value = "${var.confluent_home_value}"
 
   }
 
@@ -108,6 +114,7 @@ data "template_file" "ksql_server_properties" {
     broker_list = "${var.ccloud_broker_list}"
     access_key = "${var.ccloud_access_key}"
     secret_key = "${var.ccloud_secret_key}"
+    confluent_home_value = "${var.confluent_home_value}"
 
     schema_registry_url = "http://${google_compute_global_address.schema_registry.address}"
 
@@ -123,6 +130,7 @@ data "template_file" "ksql_server_bootstrap" {
 
     confluent_platform_location = "${var.confluent_platform_location}"
     ksql_server_properties = "${data.template_file.ksql_server_properties.rendered}"
+    confluent_home_value = "${var.confluent_home_value}"
 
   }
 
@@ -141,6 +149,7 @@ data "template_file" "control_center_properties" {
     broker_list = "${var.ccloud_broker_list}"
     access_key = "${var.ccloud_access_key}"
     secret_key = "${var.ccloud_secret_key}"
+    confluent_home_value = "${var.confluent_home_value}"
 
     schema_registry_url = "http://${google_compute_global_address.schema_registry.address}"
 
@@ -160,6 +169,7 @@ data "template_file" "control_center_bootstrap" {
 
     confluent_platform_location = "${var.confluent_platform_location}"
     control_center_properties = "${data.template_file.control_center_properties.rendered}"
+    confluent_home_value = "${var.confluent_home_value}"
 
   }
 
