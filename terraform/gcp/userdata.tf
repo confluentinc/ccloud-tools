@@ -157,6 +157,8 @@ data "template_file" "control_center_properties" {
 
     ksql_server_url = "http://${google_compute_global_address.ksql_server.address}"
 
+    ksql_public_url = "http://${google_compute_global_address.ksql_server.address}"
+
   }
 
 }
