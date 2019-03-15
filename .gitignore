@@ -1,3 +1,4 @@
+terraform/aws/cert.pem
 terraform/aws/.terraform/**/*.*
 terraform/aws/terraform.tfstate
 terraform/aws/terraform.tfstate.backup
@@ -5,6 +6,7 @@ terraform/aws/.terraform.tfstate.lock.info
 terraform/aws/ccloud.auto.tfvars
 terraform/aws/cloud.auto.tfvars
 
+terraform/gcp/cert.pem
 terraform/gcp/.terraform/**/*.*
 terraform/gcp/terraform.tfstate
 terraform/gcp/terraform.tfstate.backup
