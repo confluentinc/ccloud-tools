@@ -1,6 +1,6 @@
 # Confluent Cloud Tools
 
-This is an unofficial open-source project created to aid in quickly provisioning Confluent Platform Tools (i.e.: [Schema Registry](https://docs.confluent.io/current/schema-registry/docs/index.html), [REST Proxy](https://docs.confluent.io/current/kafka-rest/docs/index.html), [Kafka Connect](https://docs.confluent.io/current/connect/index.html), [KSQL](https://docs.confluent.io/current/ksql/docs/index.html), [Control Center](https://docs.confluent.io/current/control-center/index.html)) to be used while developing streams-based applications with [Confluent Cloud](https://www.confluent.io/confluent-cloud).
+This is an unofficial open-source project created to aid in quickly provisioning Confluent Platform Tools (i.e.: [REST Proxy](https://docs.confluent.io/current/kafka-rest/docs/index.html), [Kafka Connect](https://docs.confluent.io/current/connect/index.html), [KSQL](https://docs.confluent.io/current/ksql/docs/index.html), [Control Center](https://docs.confluent.io/current/control-center/index.html)) to be used while developing streams-based applications with [Confluent Cloud](https://www.confluent.io/confluent-cloud).
 
 This project is based on [Terraform](https://www.terraform.io) and allows you to have the ecosystem running in the Cloud—and automatically connected to the Kafka cluster. All you have to do is:
 
