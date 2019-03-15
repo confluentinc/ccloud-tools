@@ -1,3 +1,9 @@
+variable "global_prefix" {
+
+  default = "ccloud-tools"
+
+}
+
 variable "gcp_region" {
 
   default = "us-east1"
@@ -18,7 +24,6 @@ variable "instance_count" {
 
   default = {
 
-    "schema_registry"  =  1
     "rest_proxy"       =  1
     "kafka_connect"    =  1
     "ksql_server"      =  1

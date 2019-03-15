@@ -1,37 +1,4 @@
 ###########################################
-######## Schema Registry Bootstrap ########
-###########################################
-
-data "template_file" "schema_registry_properties" {
-
-  template = "${file("../util/schema-registry.properties")}"
-
-  vars {
-
-    broker_list = "${var.ccloud_broker_list}"
-    access_key = "${var.ccloud_access_key}"
-    secret_key = "${var.ccloud_secret_key}"
-    confluent_home_value = "${var.confluent_home_value}"
-
-  }
-
-}
-
-data "template_file" "schema_registry_bootstrap" {
-
-  template = "${file("../util/schema-registry.sh")}"
-
-  vars {
-
-    confluent_platform_location = "${var.confluent_platform_location}"
-    schema_registry_properties = "${data.template_file.schema_registry_properties.rendered}"
-    confluent_home_value = "${var.confluent_home_value}"
-
-  }
-
-}
-
-###########################################
 ######### REST Proxy Bootstrap ############
 ###########################################
 
@@ -46,7 +13,8 @@ data "template_file" "rest_proxy_properties" {
     secret_key = "${var.ccloud_secret_key}"
     confluent_home_value = "${var.confluent_home_value}"
 
-    schema_registry_url = "http://${google_compute_global_address.schema_registry.address}"
+    schema_registry_url = "${var.ccloud_schema_registry_url}"
+    schema_registry_basic_auth = "${var.ccloud_schema_registry_basic_auth}"
 
   }
 
@@ -81,7 +49,8 @@ data "template_file" "kafka_connect_properties" {
     secret_key = "${var.ccloud_secret_key}"
     confluent_home_value = "${var.confluent_home_value}"
 
-    schema_registry_url = "http://${google_compute_global_address.schema_registry.address}"
+    schema_registry_url = "${var.ccloud_schema_registry_url}"
+    schema_registry_basic_auth = "${var.ccloud_schema_registry_basic_auth}"
 
   }
 
@@ -116,7 +85,8 @@ data "template_file" "ksql_server_properties" {
     secret_key = "${var.ccloud_secret_key}"
     confluent_home_value = "${var.confluent_home_value}"
 
-    schema_registry_url = "http://${google_compute_global_address.schema_registry.address}"
+    schema_registry_url = "${var.ccloud_schema_registry_url}"
+    schema_registry_basic_auth = "${var.ccloud_schema_registry_basic_auth}"
 
   }
 
@@ -151,13 +121,11 @@ data "template_file" "control_center_properties" {
     secret_key = "${var.ccloud_secret_key}"
     confluent_home_value = "${var.confluent_home_value}"
 
-    schema_registry_url = "http://${google_compute_global_address.schema_registry.address}"
-
+    schema_registry_url = "${var.ccloud_schema_registry_url}"
+    schema_registry_basic_auth = "${var.ccloud_schema_registry_basic_auth}"
     kafka_connect_url = "http://${google_compute_global_address.kafka_connect.address}"
-
-    ksql_server_url = "http://${google_compute_global_address.ksql_server.address}"
-
-    ksql_public_url = "http://${google_compute_global_address.ksql_server.address}"
+    ksql_server_url = "http://${google_compute_global_address.ksql_server.address}:80"
+    ksql_public_url = "http://${google_compute_global_address.ksql_server.address}:80"
 
   }
 

@@ -3,7 +3,7 @@
 ###########################################
 resource "google_compute_network" "default" {
 
-  name = "ccloud-tools"
+  name = "${var.global_prefix}"
   auto_create_subnetworks = false
 
 }
@@ -14,7 +14,7 @@ resource "google_compute_network" "default" {
 
 resource "google_compute_subnetwork" "private_subnet" {
 
-  name = "private-subnet"
+  name = "private-subnet-${var.global_prefix}"
   project = "${var.gcp_project}"
   region = "${var.gcp_region}"
   network = "${google_compute_network.default.id}"
@@ -24,7 +24,7 @@ resource "google_compute_subnetwork" "private_subnet" {
 
 resource "google_compute_subnetwork" "public_subnet" {
 
-  name = "public-subnet"
+  name = "public-subnet-${var.global_prefix}"
   project = "${var.gcp_project}"
   region = "${var.gcp_region}"
   network = "${google_compute_network.default.id}"
@@ -36,28 +36,11 @@ resource "google_compute_subnetwork" "public_subnet" {
 ############ Compute Firewalls ############
 ###########################################
 
-resource "google_compute_firewall" "schema_registry" {
-
-  name = "schema-registry"
-  network = "${google_compute_network.default.name}"
-
-  allow {
-
-    protocol = "tcp"
-    ports = ["22", "8081"]
-
-  }
-
-  source_ranges = ["0.0.0.0/0"]
-  target_tags = ["schema-registry"]
-
-}
-
 resource "google_compute_firewall" "rest_proxy" {
 
   count = "${var.instance_count["rest_proxy"] >= 1 ? 1 : 0}"
   
-  name = "rest-proxy"
+  name = "rest-proxy-${var.global_prefix}"
   network = "${google_compute_network.default.name}"
 
   allow {
@@ -68,7 +51,7 @@ resource "google_compute_firewall" "rest_proxy" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags = ["rest-proxy"]
+  target_tags = ["rest-proxy-${var.global_prefix}"]
 
 }
 
@@ -76,7 +59,7 @@ resource "google_compute_firewall" "kafka_connect" {
 
   count = "${var.instance_count["kafka_connect"] >= 1 ? 1 : 0}"
 
-  name = "kafka-connect"
+  name = "kafka-connect-${var.global_prefix}"
   network = "${google_compute_network.default.name}"
 
   allow {
@@ -87,7 +70,7 @@ resource "google_compute_firewall" "kafka_connect" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags = ["kafka-connect"]
+  target_tags = ["kafka-connect-${var.global_prefix}"]
 
 }
 
@@ -95,7 +78,7 @@ resource "google_compute_firewall" "ksql_server" {
 
   count = "${var.instance_count["ksql_server"] >= 1 ? 1 : 0}"
 
-  name = "ksql-server"
+  name = "ksql-server-${var.global_prefix}"
   network = "${google_compute_network.default.name}"
 
   allow {
@@ -106,7 +89,7 @@ resource "google_compute_firewall" "ksql_server" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags = ["ksql-server"]
+  target_tags = ["ksql-server-${var.global_prefix}"]
 
 }
 
@@ -114,7 +97,7 @@ resource "google_compute_firewall" "control_center" {
 
   count = "${var.instance_count["control_center"] >= 1 ? 1 : 0}"
 
-  name = "control-center"
+  name = "control-center-${var.global_prefix}"
   network = "${google_compute_network.default.name}"
 
   allow {
@@ -125,6 +108,6 @@ resource "google_compute_firewall" "control_center" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags = ["control-center"]
+  target_tags = ["control-center-${var.global_prefix}"]
 
 }

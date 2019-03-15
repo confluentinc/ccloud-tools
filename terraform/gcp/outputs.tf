@@ -2,12 +2,6 @@
 ################# Outputs #################
 ###########################################
 
-output "Schema Registry" {
-
-  value = "${join(",", formatlist("http://%s", google_compute_global_address.schema_registry.*.address))}"
-
-}
-
 output "REST Proxy" {
 
   value = "${var.instance_count["rest_proxy"] >= 1
