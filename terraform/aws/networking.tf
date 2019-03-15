@@ -226,57 +226,6 @@ resource "aws_security_group" "load_balancer" {
   
 }
 
-resource "aws_security_group" "schema_registry" {
-
-  count = "${var.instance_count["schema_registry"] >= 1 ? 1 : 0}"
-
-  name = "schema-registry"
-  description = "Schema Registry"
-  vpc_id = "${aws_vpc.default.id}"
-
-  ingress {
-
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.9.0/24"]
-
-  }
-
-  ingress {
-
-    from_port   = 8081
-    to_port     = 8081
-    protocol    = "tcp"
-
-    cidr_blocks = ["10.0.1.0/24",
-                   "10.0.2.0/24",
-                   "10.0.3.0/24",
-                   "10.0.4.0/24",
-                   "10.0.5.0/24",
-                   "10.0.6.0/24",
-                   "10.0.7.0/24",
-                   "10.0.8.0/24"]
-
-  }
-
-  egress {
-
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-    
-  }
-
-    tags {
-
-        Name = "schema-registry"
-
-    }    
-  
-}
-
 resource "aws_security_group" "rest_proxy" {
 
   count = "${var.instance_count["rest_proxy"] >= 1 ? 1 : 0}"

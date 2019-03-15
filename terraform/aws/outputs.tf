@@ -2,12 +2,6 @@
 ################# Outputs #################
 ###########################################
 
-output "Schema Registry              " {
-
-  value = "${join(",", formatlist("http://%s", aws_alb.schema_registry.*.dns_name))}"
-
-}
-
 output "REST Proxy                   " {
 
   value = "${var.instance_count["rest_proxy"] >= 1

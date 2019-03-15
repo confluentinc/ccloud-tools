@@ -1,37 +1,4 @@
 ###########################################
-######## Schema Registry Bootstrap ########
-###########################################
-
-data "template_file" "schema_registry_properties" {
-
-  template = "${file("../util/schema-registry.properties")}"
-
-  vars {
-
-    broker_list = "${var.ccloud_broker_list}"
-    access_key = "${var.ccloud_access_key}"
-    secret_key = "${var.ccloud_secret_key}"
-    confluent_home_value = "${var.confluent_home_value}"
-
-  }
-
-}
-
-data "template_file" "schema_registry_bootstrap" {
-
-  template = "${file("../util/schema-registry.sh")}"
-
-  vars {
-
-    confluent_platform_location = "${var.confluent_platform_location}"
-    schema_registry_properties = "${data.template_file.schema_registry_properties.rendered}"
-    confluent_home_value = "${var.confluent_home_value}"
-
-  }
-
-}
-
-###########################################
 ######### REST Proxy Bootstrap ############
 ###########################################
 
@@ -44,10 +11,9 @@ data "template_file" "rest_proxy_properties" {
     broker_list = "${var.ccloud_broker_list}"
     access_key = "${var.ccloud_access_key}"
     secret_key = "${var.ccloud_secret_key}"
+    schema_registry_url = "${var.ccloud_schema_registry_url}"
+    schema_registry_basic_auth = "${var.ccloud_schema_registry_basic_auth}"
     confluent_home_value = "${var.confluent_home_value}"
-
-    schema_registry_url = "${join(",", formatlist("http://%s:%s",
-      aws_instance.schema_registry.*.private_ip, "8081"))}"
 
   }
 
@@ -62,9 +28,6 @@ data "template_file" "rest_proxy_bootstrap" {
     confluent_platform_location = "${var.confluent_platform_location}"
     rest_proxy_properties = "${data.template_file.rest_proxy_properties.rendered}"
     confluent_home_value = "${var.confluent_home_value}"
-
-    schema_registry_url = "${join(",", formatlist("http://%s:%s",
-      aws_instance.schema_registry.*.private_ip, "8081"))}"
 
   }
 
@@ -83,10 +46,9 @@ data "template_file" "kafka_connect_properties" {
     broker_list = "${var.ccloud_broker_list}"
     access_key = "${var.ccloud_access_key}"
     secret_key = "${var.ccloud_secret_key}"
+    schema_registry_url = "${var.ccloud_schema_registry_url}"
+    schema_registry_basic_auth = "${var.ccloud_schema_registry_basic_auth}"
     confluent_home_value = "${var.confluent_home_value}"
-
-    schema_registry_url = "${join(",", formatlist("http://%s:%s",
-      aws_instance.schema_registry.*.private_ip, "8081"))}"
 
   }
 
@@ -119,10 +81,9 @@ data "template_file" "ksql_server_properties" {
     broker_list = "${var.ccloud_broker_list}"
     access_key = "${var.ccloud_access_key}"
     secret_key = "${var.ccloud_secret_key}"
+    schema_registry_url = "${var.ccloud_schema_registry_url}"
+    schema_registry_basic_auth = "${var.ccloud_schema_registry_basic_auth}"
     confluent_home_value = "${var.confluent_home_value}"
-
-    schema_registry_url = "${join(",", formatlist("http://%s:%s",
-      aws_instance.schema_registry.*.private_ip, "8081"))}"
 
   }
 
@@ -155,10 +116,9 @@ data "template_file" "control_center_properties" {
     broker_list = "${var.ccloud_broker_list}"
     access_key = "${var.ccloud_access_key}"
     secret_key = "${var.ccloud_secret_key}"
+    schema_registry_url = "${var.ccloud_schema_registry_url}"
+    schema_registry_basic_auth = "${var.ccloud_schema_registry_basic_auth}"
     confluent_home_value = "${var.confluent_home_value}"
-
-    schema_registry_url = "${join(",", formatlist("http://%s:%s",
-      aws_instance.schema_registry.*.private_ip, "8081"))}"
 
     kafka_connect_url = "${join(",", formatlist("http://%s:%s",
       aws_instance.kafka_connect.*.private_ip, "8083"))}"
