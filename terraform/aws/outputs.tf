@@ -40,17 +40,10 @@ output "Control Center               " {
 
 }
 
-output "Bastion Server IP Address    " {
+output "Bastion Server               " {
 
   value = "${var.instance_count["bastion_server"] >= 1
-           ? "${join(",", formatlist("%s", aws_instance.bastion_server.*.public_ip))}"
-           : "Bastion Server has been disabled"}"
-
-}
-output "Bastion Server Private Key   " {
-
-  value = "${var.instance_count["bastion_server"] >= 1
-           ? "${tls_private_key.key_pair.private_key_pem}"
+           ? "ssh ec2-user@${join(",", formatlist("%s", aws_instance.bastion_server.*.public_ip))} -i cert.pem"
            : "Bastion Server has been disabled"}"
 
 }

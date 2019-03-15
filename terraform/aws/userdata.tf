@@ -193,11 +193,6 @@ data "template_file" "control_center_bootstrap" {
 
 data "template_file" "bastion_server_bootstrap" {
 
-  template = <<EOT
-
-    #!/bin/bash
-    yum update -y
-
-  EOT
+  template = "${file("../util/bastion-server.sh")}"
   
 }
