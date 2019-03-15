@@ -5,3 +5,6 @@
 ccloud_broker_list = "<CCLOUD_BROKER_LIST>"
 ccloud_access_key = "<CCLOUD_ACCESS_KEY>"
 ccloud_secret_key = "<CCLOUD_SECRET_KEY>"
+
+ccloud_schema_registry_url = "<CCLOUD_SCHEMA_REGISTRY_URL>"
+ccloud_schema_registry_basic_auth = "<CCLOUD_SCHEMA_REGISTRY_BASIC_AUTH>"
