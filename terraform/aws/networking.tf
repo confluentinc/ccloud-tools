@@ -8,7 +8,7 @@ resource "aws_vpc" "default" {
 
     tags {
 
-        Name = "ccloud-tools"
+        Name = "${var.global_prefix}"
 
     }
 
@@ -20,7 +20,7 @@ resource "aws_internet_gateway" "default" {
 
     tags {
 
-        Name = "ccloud-tools"
+        Name = "${var.global_prefix}"
 
     }
 
@@ -33,7 +33,7 @@ resource "aws_eip" "default" {
 
     tags {
 
-        Name = "ccloud-tools"
+        Name = "${var.global_prefix}"
 
     }
 
@@ -48,7 +48,7 @@ resource "aws_nat_gateway" "default" {
 
     tags {
 
-        Name = "ccloud-tools"
+        Name = "${var.global_prefix}"
 
     }
 
@@ -68,7 +68,7 @@ resource "aws_route_table" "private_route_table" {
 
   tags {
 
-    Name = "private-route-table"
+    Name = "private-route-table-${var.global_prefix}"
 
   }
 
@@ -137,7 +137,7 @@ resource "aws_subnet" "private_subnet" {
 
     tags {
 
-        Name = "private-subnet-${count.index}"
+        Name = "private-subnet-${var.global_prefix}-${count.index}"
 
     }    
 
@@ -152,7 +152,7 @@ resource "aws_subnet" "public_subnet_1" {
 
     tags {
 
-        Name = "public-subnet-1"
+        Name = "public-subnet-${var.global_prefix}-1"
 
     }    
 
@@ -167,7 +167,7 @@ resource "aws_subnet" "public_subnet_2" {
 
     tags {
 
-        Name = "public-subnet-2"
+        Name = "public-subnet-${var.global_prefix}-2"
 
     }    
 
@@ -184,7 +184,7 @@ resource "aws_subnet" "bastion_server" {
 
     tags {
 
-        Name = "bastion-server"
+        Name = "bastion-server-${var.global_prefix}"
 
     }    
 
@@ -220,7 +220,7 @@ resource "aws_security_group" "load_balancer" {
 
     tags {
 
-        Name = "load-balancer"
+        Name = "load-balancer-${var.global_prefix}"
 
     }    
   
@@ -281,7 +281,7 @@ resource "aws_security_group" "rest_proxy" {
 
   count = "${var.instance_count["rest_proxy"] >= 1 ? 1 : 0}"
 
-  name = "rest-proxy"
+  name = "rest-proxy-${var.global_prefix}"
   description = "REST Proxy"
   vpc_id = "${aws_vpc.default.id}"
 
@@ -322,7 +322,7 @@ resource "aws_security_group" "rest_proxy" {
 
     tags {
 
-        Name = "rest-proxy"
+        Name = "rest-proxy-${var.global_prefix}"
 
     }    
   
@@ -332,7 +332,7 @@ resource "aws_security_group" "kafka_connect" {
 
   count = "${var.instance_count["kafka_connect"] >= 1 ? 1 : 0}"
 
-  name = "kafka-connect"
+  name = "kafka-connect-${var.global_prefix}"
   description = "Kafka Connect"
   vpc_id = "${aws_vpc.default.id}"
 
@@ -373,7 +373,7 @@ resource "aws_security_group" "kafka_connect" {
 
     tags {
 
-        Name = "kafka-connect"
+        Name = "kafka-connect-${var.global_prefix}"
 
     }    
   
@@ -383,7 +383,7 @@ resource "aws_security_group" "ksql_server" {
 
   count = "${var.instance_count["ksql_server"] >= 1 ? 1 : 0}"
 
-  name = "ksql-server"
+  name = "ksql-server-${var.global_prefix}"
   description = "KSQL Server"
   vpc_id = "${aws_vpc.default.id}"
 
@@ -424,7 +424,7 @@ resource "aws_security_group" "ksql_server" {
 
     tags {
 
-        Name = "ksql-server"
+        Name = "ksql-server-${var.global_prefix}"
 
     }    
   
@@ -434,7 +434,7 @@ resource "aws_security_group" "control_center" {
 
   count = "${var.instance_count["control_center"] >= 1 ? 1 : 0}"
 
-  name = "control-center"
+  name = "control-center-${var.global_prefix}"
   description = "Control Center"
   vpc_id = "${aws_vpc.default.id}"
 
@@ -475,7 +475,7 @@ resource "aws_security_group" "control_center" {
 
     tags {
 
-        Name = "control-center"
+        Name = "control-center-${var.global_prefix}"
 
     }    
   
@@ -485,7 +485,7 @@ resource "aws_security_group" "bastion_server" {
 
   count = "${var.instance_count["bastion_server"] >= 1 ? 1 : 0}"
 
-  name = "bastion-server"
+  name = "bastion-server-${var.global_prefix}"
   description = "Bastion Server"
   vpc_id = "${aws_vpc.default.id}"
 
@@ -516,7 +516,7 @@ resource "aws_security_group" "bastion_server" {
 
     tags {
 
-        Name = "bastion-server"
+        Name = "bastion-server-${var.global_prefix}"
 
     }    
 

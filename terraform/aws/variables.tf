@@ -1,3 +1,9 @@
+variable "global_prefix" {
+
+  default = "ccloud-tools"
+
+}
+
 variable "aws_region" {
 
   default = "us-east-1"
