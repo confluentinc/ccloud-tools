@@ -43,6 +43,7 @@ data "template_file" "kafka_connect_properties" {
 
   vars {
 
+    global_prefix = "${var.global_prefix}"
     broker_list = "${var.ccloud_broker_list}"
     access_key = "${var.ccloud_access_key}"
     secret_key = "${var.ccloud_secret_key}"
@@ -78,6 +79,7 @@ data "template_file" "ksql_server_properties" {
 
   vars {
 
+    global_prefix = "${var.global_prefix}"
     broker_list = "${var.ccloud_broker_list}"
     access_key = "${var.ccloud_access_key}"
     secret_key = "${var.ccloud_secret_key}"
@@ -113,6 +115,7 @@ data "template_file" "control_center_properties" {
 
   vars {
 
+    global_prefix = "${var.global_prefix}"
     broker_list = "${var.ccloud_broker_list}"
     access_key = "${var.ccloud_access_key}"
     secret_key = "${var.ccloud_secret_key}"

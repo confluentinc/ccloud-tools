@@ -24,12 +24,11 @@ variable "instance_count" {
 
   default = {
 
-    "schema_registry"  =  1
     "rest_proxy"       =  1
     "kafka_connect"    =  1
     "ksql_server"      =  1
     "control_center"   =  1
-    "bastion_server"   =  1
+    "bastion_server"   =  0
 
   }
 
@@ -37,12 +36,12 @@ variable "instance_count" {
 
 variable "confluent_platform_location" {
 
-  default = "http://packages.confluent.io/archive/5.1/confluent-5.1.0-2.11.zip"
+  default = "http://packages.confluent.io/archive/5.1/confluent-5.1.2-2.11.zip"
 
 }
 
 variable "confluent_home_value" {
 
-  default = "/etc/confluent/confluent-5.1.0"
+  default = "/etc/confluent/confluent-5.1.2"
 
 }

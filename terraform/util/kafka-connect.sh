@@ -11,9 +11,9 @@ yum install java-1.8.0-openjdk-devel.x86_64 -y
 
 cd /tmp
 wget ${confluent_platform_location}
-unzip confluent-5.1.0-2.11.zip
+unzip confluent-5.1.2-2.11.zip
 mkdir /etc/confluent
-mv confluent-5.1.0 /etc/confluent
+mv confluent-5.1.2 /etc/confluent
 mkdir ${confluent_home_value}/etc/kafka-connect
 
 ########### Generating Props File ###########
