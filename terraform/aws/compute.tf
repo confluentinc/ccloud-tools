@@ -46,7 +46,7 @@ resource "aws_instance" "rest_proxy" {
                 "aws_nat_gateway.default"]
 
   count = "${var.instance_count["rest_proxy"]}"
-  ami = "ami-0922553b7b0369273"
+  ami = "${var.ec2_ami}"
   instance_type = "t3.medium"
   key_name = "${aws_key_pair.generated_key.key_name}"
 
@@ -81,7 +81,7 @@ resource "aws_instance" "kafka_connect" {
                 "aws_nat_gateway.default"]
 
   count = "${var.instance_count["kafka_connect"]}"
-  ami = "ami-0922553b7b0369273"
+  ami = "${var.ec2_ami}"
   instance_type = "t3.medium"
   key_name = "${aws_key_pair.generated_key.key_name}"
 
@@ -116,7 +116,7 @@ resource "aws_instance" "ksql_server" {
                 "aws_nat_gateway.default"]
 
   count = "${var.instance_count["ksql_server"]}"
-  ami = "ami-0922553b7b0369273"
+  ami = "${var.ec2_ami}"
   instance_type = "t3.2xlarge"
   key_name = "${aws_key_pair.generated_key.key_name}"
 
@@ -151,7 +151,7 @@ resource "aws_instance" "control_center" {
                 "aws_instance.ksql_server"]
 
   count = "${var.instance_count["control_center"]}"
-  ami = "ami-0922553b7b0369273"
+  ami = "${var.ec2_ami}"
   instance_type = "t3.2xlarge"
   key_name = "${aws_key_pair.generated_key.key_name}"
 
@@ -184,7 +184,7 @@ resource "aws_instance" "bastion_server" {
 
   count = "${var.instance_count["bastion_server"] >= 1 ? 1 : 0}"
 
-  ami = "ami-0922553b7b0369273"
+  ami = "${var.ec2_ami}"
   instance_type = "t2.micro"
   key_name = "${aws_key_pair.generated_key.key_name}"
 
