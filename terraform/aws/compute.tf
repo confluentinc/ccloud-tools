@@ -52,12 +52,11 @@ resource "aws_instance" "rest_proxy" {
 
   subnet_id = "${element(aws_subnet.private_subnet.*.id, count.index)}"
   vpc_security_group_ids = ["${aws_security_group.rest_proxy.id}"]
-  
+
   user_data = "${data.template_file.rest_proxy_bootstrap.rendered}"
 
-  ebs_block_device {
+  root_block_device {
 
-    device_name = "/dev/xvdb"
     volume_type = "gp2"
     volume_size = 100
 
@@ -87,12 +86,11 @@ resource "aws_instance" "kafka_connect" {
 
   subnet_id = "${element(aws_subnet.private_subnet.*.id, count.index)}"
   vpc_security_group_ids = ["${aws_security_group.kafka_connect.id}"]
-  
+
   user_data = "${data.template_file.kafka_connect_bootstrap.rendered}"
 
-  ebs_block_device {
+  root_block_device {
 
-    device_name = "/dev/xvdb"
     volume_type = "gp2"
     volume_size = 100
 
@@ -122,12 +120,11 @@ resource "aws_instance" "ksql_server" {
 
   subnet_id = "${element(aws_subnet.private_subnet.*.id, count.index)}"
   vpc_security_group_ids = ["${aws_security_group.ksql_server.id}"]
-  
+
   user_data = "${data.template_file.ksql_server_bootstrap.rendered}"
 
-  ebs_block_device {
+  root_block_device {
 
-    device_name = "/dev/xvdb"
     volume_type = "gp2"
     volume_size = 300
 
@@ -157,12 +154,11 @@ resource "aws_instance" "control_center" {
 
   subnet_id = "${element(aws_subnet.private_subnet.*.id, count.index)}"
   vpc_security_group_ids = ["${aws_security_group.control_center.id}"]
-  
+
   user_data = "${data.template_file.control_center_bootstrap.rendered}"
 
-  ebs_block_device {
+  root_block_device {
 
-    device_name = "/dev/xvdb"
     volume_type = "gp2"
     volume_size = 300
 
@@ -193,9 +189,8 @@ resource "aws_instance" "bastion_server" {
 
   user_data = "${data.template_file.bastion_server_bootstrap.rendered}"
 
-  ebs_block_device {
+  root_block_device {
 
-    device_name = "/dev/xvdb"
     volume_type = "gp2"
     volume_size = 10
 
@@ -222,12 +217,12 @@ resource "aws_alb_target_group" "rest_proxy_target_group" {
   protocol = "HTTP"
   vpc_id = "${aws_vpc.default.id}"
 
-  health_check {    
+  health_check {
 
-    healthy_threshold = 3    
-    unhealthy_threshold = 3    
-    timeout = 3   
-    interval = 5    
+    healthy_threshold = 3
+    unhealthy_threshold = 3
+    timeout = 3
+    interval = 5
     path = "/"
     port = "8082"
 
@@ -267,11 +262,11 @@ resource "aws_alb" "rest_proxy" {
 resource "aws_alb_listener" "rest_proxy_listener" {
 
   count = "${var.instance_count["rest_proxy"] >= 1 ? 1 : 0}"
-  
-  load_balancer_arn = "${aws_alb.rest_proxy.arn}"  
+
+  load_balancer_arn = "${aws_alb.rest_proxy.arn}"
   protocol = "HTTP"
   port = "80"
-  
+
   default_action {
 
     target_group_arn = "${aws_alb_target_group.rest_proxy_target_group.arn}"
@@ -294,12 +289,12 @@ resource "aws_alb_target_group" "kafka_connect_target_group" {
   protocol = "HTTP"
   vpc_id = "${aws_vpc.default.id}"
 
-  health_check {    
+  health_check {
 
-    healthy_threshold = 3    
-    unhealthy_threshold = 3    
-    timeout = 3   
-    interval = 5    
+    healthy_threshold = 3
+    unhealthy_threshold = 3
+    timeout = 3
+    interval = 5
     path = "/"
     port = "8083"
 
@@ -339,11 +334,11 @@ resource "aws_alb" "kafka_connect" {
 resource "aws_alb_listener" "kafka_connect_listener" {
 
   count = "${var.instance_count["kafka_connect"] >= 1 ? 1 : 0}"
-  
-  load_balancer_arn = "${aws_alb.kafka_connect.arn}"  
+
+  load_balancer_arn = "${aws_alb.kafka_connect.arn}"
   protocol = "HTTP"
   port = "80"
-  
+
   default_action {
 
     target_group_arn = "${aws_alb_target_group.kafka_connect_target_group.arn}"
@@ -366,12 +361,12 @@ resource "aws_alb_target_group" "ksql_server_target_group" {
   protocol = "HTTP"
   vpc_id = "${aws_vpc.default.id}"
 
-  health_check {    
+  health_check {
 
-    healthy_threshold = 3    
-    unhealthy_threshold = 3    
-    timeout = 3   
-    interval = 5    
+    healthy_threshold = 3
+    unhealthy_threshold = 3
+    timeout = 3
+    interval = 5
     path = "/info"
     port = "8088"
 
@@ -411,11 +406,11 @@ resource "aws_alb" "ksql_server" {
 resource "aws_alb_listener" "ksql_server_listener" {
 
   count = "${var.instance_count["ksql_server"] >= 1 ? 1 : 0}"
-  
+
   load_balancer_arn = "${aws_alb.ksql_server.arn}"
   protocol = "HTTP"
   port = "80"
-  
+
   default_action {
 
     target_group_arn = "${aws_alb_target_group.ksql_server_target_group.arn}"
@@ -438,12 +433,12 @@ resource "aws_alb_target_group" "control_center_target_group" {
   protocol = "HTTP"
   vpc_id = "${aws_vpc.default.id}"
 
-  health_check {    
+  health_check {
 
-    healthy_threshold = 3    
-    unhealthy_threshold = 3    
-    timeout = 3   
-    interval = 5    
+    healthy_threshold = 3
+    unhealthy_threshold = 3
+    timeout = 3
+    interval = 5
     path = "/"
     port = "9021"
 
@@ -483,11 +478,11 @@ resource "aws_alb" "control_center" {
 resource "aws_alb_listener" "control_center_listener" {
 
   count = "${var.instance_count["control_center"] >= 1 ? 1 : 0}"
-  
-  load_balancer_arn = "${aws_alb.control_center.arn}"  
+
+  load_balancer_arn = "${aws_alb.control_center.arn}"
   protocol = "HTTP"
   port = "80"
-  
+
   default_action {
 
     target_group_arn = "${aws_alb_target_group.control_center_target_group.arn}"
