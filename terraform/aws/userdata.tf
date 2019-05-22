@@ -157,5 +157,15 @@ data "template_file" "control_center_bootstrap" {
 data "template_file" "bastion_server_bootstrap" {
 
   template = "${file("../util/bastion-server.sh")}"
+
+  vars {
+
+    private_key_pem = "${tls_private_key.key_pair.private_key_pem}"
+    rest_proxy_addresses = "${join(" ", formatlist("%s", aws_instance.rest_proxy.*.private_ip))}"
+    kafka_connect_addresses = "${join(" ", formatlist("%s", aws_instance.kafka_connect.*.private_ip))}"
+    ksql_server_addresses = "${join(" ", formatlist("%s", aws_instance.ksql_server.*.private_ip))}"
+    control_center_addresses = "${join(" ", formatlist("%s", aws_instance.control_center.*.private_ip))}"
+
+  }
   
 }
