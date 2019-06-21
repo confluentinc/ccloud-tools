@@ -178,6 +178,11 @@ resource "aws_instance" "control_center" {
 
 resource "aws_instance" "bastion_server" {
 
+  depends_on = ["aws_instance.rest_proxy",
+                "aws_instance.kafka_connect",
+                "aws_instance.ksql_server",
+                "aws_instance.control_center"]
+
   count = "${var.instance_count["bastion_server"] >= 1 ? 1 : 0}"
 
   ami = "${var.ec2_ami}"
