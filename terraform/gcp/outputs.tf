@@ -41,4 +41,3 @@ output "Control_Center" {
     ),
   ) : "Control Center has been disabled"
 }
-
