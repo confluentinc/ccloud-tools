@@ -51,9 +51,9 @@ resource "google_compute_region_instance_group_manager" "rest_proxy" {
 
   name                      = "rest-proxy-instance-group-${var.global_prefix}"
   instance_template         = google_compute_instance_template.rest_proxy[0].self_link
-  base_instance_name        = "rest-proxy"
-  region                    = var.gcp_region
-  distribution_policy_zones = var.gcp_availability_zones
+  base_instance_name        = "${var.global_prefix}-rest-proxy"
+  region                    = local.region
+  distribution_policy_zones = data.google_compute_zones.available.names
   target_size               = var.instance_count["rest_proxy"]
 
   named_port {
@@ -150,9 +150,9 @@ resource "google_compute_region_instance_group_manager" "kafka_connect" {
 
   name                      = "kafka-connect-instance-group-${var.global_prefix}"
   instance_template         = google_compute_instance_template.kafka_connect[0].self_link
-  base_instance_name        = "kafka-connect"
-  region                    = var.gcp_region
-  distribution_policy_zones = var.gcp_availability_zones
+  base_instance_name        = "${var.global_prefix}-kafka-connect"
+  region                    = local.region
+  distribution_policy_zones = data.google_compute_zones.available.names
   target_size               = var.instance_count["kafka_connect"]
 
   named_port {
@@ -249,9 +249,9 @@ resource "google_compute_region_instance_group_manager" "ksql_server" {
 
   name                      = "ksql-server-instance-group-${var.global_prefix}"
   instance_template         = google_compute_instance_template.ksql_server[0].self_link
-  base_instance_name        = "ksql-server"
-  region                    = var.gcp_region
-  distribution_policy_zones = var.gcp_availability_zones
+  base_instance_name        = "${var.global_prefix}-ksql-server"
+  region                    = local.region
+  distribution_policy_zones = data.google_compute_zones.available.names
   target_size               = var.instance_count["ksql_server"]
 
   named_port {
@@ -348,9 +348,9 @@ resource "google_compute_region_instance_group_manager" "control_center" {
 
   name                      = "control-center-instance-group-${var.global_prefix}"
   instance_template         = google_compute_instance_template.control_center[0].self_link
-  base_instance_name        = "control-center"
-  region                    = var.gcp_region
-  distribution_policy_zones = var.gcp_availability_zones
+  base_instance_name        = "${var.global_prefix}-control-center"
+  region                    = local.region
+  distribution_policy_zones = data.google_compute_zones.available.names
   target_size               = var.instance_count["control_center"]
 
   named_port {
