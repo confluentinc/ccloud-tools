@@ -6,11 +6,11 @@ data "template_file" "rest_proxy_properties" {
   template = file("../util/rest-proxy.properties")
 
   vars = {
-    broker_list                = var.ccloud_broker_list
-    access_key                 = var.ccloud_access_key
-    secret_key                 = var.ccloud_secret_key
-    schema_registry_url        = var.ccloud_schema_registry_url
-    schema_registry_basic_auth = var.ccloud_schema_registry_basic_auth
+    bootstrap_server           = var.bootstrap_server
+    cluster_api_key            = var.cluster_api_key
+    cluster_api_secret         = var.cluster_api_secret
+    schema_registry_url        = var.schema_registry_url
+    schema_registry_basic_auth = var.schema_registry_basic_auth
     confluent_home_value       = var.confluent_home_value
   }
 }
@@ -34,11 +34,11 @@ data "template_file" "kafka_connect_properties" {
 
   vars = {
     global_prefix              = var.global_prefix
-    broker_list                = var.ccloud_broker_list
-    access_key                 = var.ccloud_access_key
-    secret_key                 = var.ccloud_secret_key
-    schema_registry_url        = var.ccloud_schema_registry_url
-    schema_registry_basic_auth = var.ccloud_schema_registry_basic_auth
+    bootstrap_server           = var.bootstrap_server
+    cluster_api_key            = var.cluster_api_key
+    cluster_api_secret         = var.cluster_api_secret
+    schema_registry_url        = var.schema_registry_url
+    schema_registry_basic_auth = var.schema_registry_basic_auth
     confluent_home_value       = var.confluent_home_value
   }
 }
@@ -62,11 +62,11 @@ data "template_file" "ksql_server_properties" {
 
   vars = {
     global_prefix              = var.global_prefix
-    broker_list                = var.ccloud_broker_list
-    access_key                 = var.ccloud_access_key
-    secret_key                 = var.ccloud_secret_key
-    schema_registry_url        = var.ccloud_schema_registry_url
-    schema_registry_basic_auth = var.ccloud_schema_registry_basic_auth
+    bootstrap_server           = var.bootstrap_server
+    cluster_api_key            = var.cluster_api_key
+    cluster_api_secret         = var.cluster_api_secret
+    schema_registry_url        = var.schema_registry_url
+    schema_registry_basic_auth = var.schema_registry_basic_auth
     confluent_home_value       = var.confluent_home_value
   }
 }
@@ -90,11 +90,11 @@ data "template_file" "control_center_properties" {
 
   vars = {
     global_prefix              = var.global_prefix
-    broker_list                = var.ccloud_broker_list
-    access_key                 = var.ccloud_access_key
-    secret_key                 = var.ccloud_secret_key
-    schema_registry_url        = var.ccloud_schema_registry_url
-    schema_registry_basic_auth = var.ccloud_schema_registry_basic_auth
+    bootstrap_server           = var.bootstrap_server
+    cluster_api_key            = var.cluster_api_key
+    cluster_api_secret         = var.cluster_api_secret
+    schema_registry_url        = var.schema_registry_url
+    schema_registry_basic_auth = var.schema_registry_basic_auth
     confluent_home_value       = var.confluent_home_value
     kafka_connect_url = join(
       ",",

@@ -2,11 +2,11 @@ data "template_file" "config_properties" {
   template = file("../util/config.properties")
 
   vars = {
-    broker_list                = var.ccloud_broker_list
-    access_key                 = var.ccloud_access_key
-    secret_key                 = var.ccloud_secret_key
-    schema_registry_url        = var.ccloud_schema_registry_url
-    schema_registry_basic_auth = var.ccloud_schema_registry_basic_auth
+    broker_list                = var.bootstrap_server
+    access_key                 = var.cluster_api_key
+    secret_key                 = var.cluster_api_secret
+    schema_registry_url        = var.schema_registry_url
+    schema_registry_basic_auth = var.schema_registry_basic_auth
   }
 }
 
