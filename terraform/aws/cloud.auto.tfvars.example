@@ -2,9 +2,5 @@
 ################## AWS ####################
 ###########################################
 
-aws_access_key = "<YOUR_AWS_ACCESS_KEY>"
-aws_secret_key = "<YOUR_AWS_SECRET_KEY>"
-
-aws_region = "<YOUR_AWS_REGION>"
-aws_availability_zones = ["<YOUR_AWS_AZS>"]
-ec2_ami = "<YOUR_EC2_AMI>"
+aws_access_key = "<AWS_ACCESS_KEY>"
+aws_secret_key = "<AWS_SECRET_KEY>"
