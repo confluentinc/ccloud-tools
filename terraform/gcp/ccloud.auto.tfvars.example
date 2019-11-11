@@ -2,9 +2,9 @@
 ############# Confluent Cloud #############
 ###########################################
 
-ccloud_broker_list = "<CCLOUD_BROKER_LIST>"
-ccloud_access_key = "<CCLOUD_ACCESS_KEY>"
-ccloud_secret_key = "<CCLOUD_SECRET_KEY>"
+bootstrap_server = "<CCLOUD_BOOTSTRAP_SERVER>"
+cluster_api_key = "<CCLOUD_API_KEY>"
+cluster_api_secret = "<CCLOUD_API_SECRET>"
 
-ccloud_schema_registry_url = "<CCLOUD_SR_URL>"
-ccloud_schema_registry_basic_auth = "<CCLOUD_SR_API_KEY>:<CCLOUD_SR_SECRET_KEY>"
+schema_registry_url = "<SCHEMA_REGISTRY_URL>"
+schema_registry_basic_auth = "<SCHEMA_REGISTRY_API_KEY>:<SCHEMA_REGISTRY_SECRET>"

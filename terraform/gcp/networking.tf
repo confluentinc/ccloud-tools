@@ -13,7 +13,7 @@ resource "google_compute_network" "default" {
 resource "google_compute_subnetwork" "private_subnet" {
   name          = "private-subnet-${var.global_prefix}"
   project       = var.gcp_project
-  region        = var.gcp_region
+  region        = local.region
   network       = google_compute_network.default.id
   ip_cidr_range = "10.0.1.0/24"
 }
@@ -21,7 +21,7 @@ resource "google_compute_subnetwork" "private_subnet" {
 resource "google_compute_subnetwork" "public_subnet" {
   name          = "public-subnet-${var.global_prefix}"
   project       = var.gcp_project
-  region        = var.gcp_region
+  region        = local.region
   network       = google_compute_network.default.id
   ip_cidr_range = "10.0.2.0/24"
 }
