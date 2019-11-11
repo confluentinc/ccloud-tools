@@ -25,14 +25,6 @@ data "aws_ami" "amazon_linux_2" {
  }
 }
 
-resource "random_string" "random_string" {
-  length = 8
-  special = false
-  upper = false
-  lower = true
-  number = false
-}
-
 variable "aws_access_key" {
 }
 
