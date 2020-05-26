@@ -50,11 +50,14 @@ resource "google_compute_region_instance_group_manager" "rest_proxy" {
   count = var.instance_count["rest_proxy"] > 0 ? var.instance_count["rest_proxy"] : 0
 
   name                      = "rest-proxy-instance-group-${var.global_prefix}"
-  instance_template         = google_compute_instance_template.rest_proxy[0].self_link
   base_instance_name        = "${var.global_prefix}-rest-proxy"
   region                    = local.region
   distribution_policy_zones = data.google_compute_zones.available.names
   target_size               = var.instance_count["rest_proxy"]
+
+  version {
+    instance_template = google_compute_instance_template.rest_proxy[0].self_link
+  }
 
   named_port {
     name = "http"
@@ -149,11 +152,14 @@ resource "google_compute_region_instance_group_manager" "kafka_connect" {
   count = var.instance_count["kafka_connect"] > 0 ? var.instance_count["kafka_connect"] : 0
 
   name                      = "kafka-connect-instance-group-${var.global_prefix}"
-  instance_template         = google_compute_instance_template.kafka_connect[0].self_link
   base_instance_name        = "${var.global_prefix}-kafka-connect"
   region                    = local.region
   distribution_policy_zones = data.google_compute_zones.available.names
   target_size               = var.instance_count["kafka_connect"]
+
+  version {
+    instance_template = google_compute_instance_template.kafka_connect[0].self_link
+  }
 
   named_port {
     name = "http"
@@ -248,11 +254,14 @@ resource "google_compute_region_instance_group_manager" "ksql_server" {
   count = var.instance_count["ksql_server"] > 0 ? var.instance_count["ksql_server"] : 0
 
   name                      = "ksql-server-instance-group-${var.global_prefix}"
-  instance_template         = google_compute_instance_template.ksql_server[0].self_link
   base_instance_name        = "${var.global_prefix}-ksql-server"
   region                    = local.region
   distribution_policy_zones = data.google_compute_zones.available.names
   target_size               = var.instance_count["ksql_server"]
+
+  version {
+    instance_template = google_compute_instance_template.ksql_server[0].self_link
+  }
 
   named_port {
     name = "http"
@@ -347,11 +356,14 @@ resource "google_compute_region_instance_group_manager" "control_center" {
   count = var.instance_count["control_center"] > 0 ? var.instance_count["control_center"] : 0
 
   name                      = "control-center-instance-group-${var.global_prefix}"
-  instance_template         = google_compute_instance_template.control_center[0].self_link
   base_instance_name        = "${var.global_prefix}-control-center"
   region                    = local.region
   distribution_policy_zones = data.google_compute_zones.available.names
   target_size               = var.instance_count["control_center"]
+
+  version {
+    instance_template = google_compute_instance_template.control_center[0].self_link
+  }
 
   named_port {
     name = "http"
